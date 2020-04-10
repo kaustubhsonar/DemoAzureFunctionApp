@@ -7,11 +7,8 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Security.Cryptography;
 using System.Text;
 using System.Runtime.InteropServices;
@@ -44,8 +41,8 @@ namespace DemoFunction
                     result = re.RecognizeByFileBuffer(fileBytes, fileBytes.Length, 80);
                 }
             }
-            //test end 
 
+            log.LogInformation("Result : " + result);
             return (ActionResult)new OkObjectResult($"APIResponse ," + result);
 
 
@@ -406,29 +403,29 @@ namespace DemoFunction
                 return get_duration_ms_by_file(filePath);
             }
 
-            [DllImport("libacrcloud_extr_tool.dll")]
+            [DllImport("..\\MyCustomDll\\libacrcloud_extr_tool.dll")]
             private static extern int create_fingerprint(byte[] pcm_buffer, int pcm_buffer_len, byte is_db_fingerprint, ref IntPtr fps_buffer);
-            [DllImport("libacrcloud_extr_tool.dll")]
+            [DllImport("..\\MyCustomDll\\libacrcloud_extr_tool.dll")]
             private static extern int create_humming_fingerprint(byte[] pcm_buffer, int pcm_buffer_len, ref IntPtr fps_buffer);
-            [DllImport("libacrcloud_extr_tool.dll")]
+            [DllImport("..\\MyCustomDll\\libacrcloud_extr_tool.dll")]
             private static extern int create_fingerprint_by_file(string file_path, int start_time_seconds, int audio_len_seconds, byte is_db_fingerprint, ref IntPtr fps_buffer);
-            [DllImport("libacrcloud_extr_tool.dll")]
+            [DllImport("..\\MyCustomDll\\libacrcloud_extr_tool.dll")]
             private static extern int create_humming_fingerprint_by_file(string file_path, int start_time_seconds, int audio_len_seconds, ref IntPtr fps_buffer);
-            [DllImport("libacrcloud_extr_tool.dll")]
+            [DllImport("..\\MyCustomDll\\libacrcloud_extr_tool.dll")]
             private static extern int create_fingerprint_by_filebuffer(byte[] file_buffer, int file_buffer_len, int start_time_seconds, int audio_len_seconds, byte is_db_fingerprint, ref IntPtr fps_buffer);
-            [DllImport("libacrcloud_extr_tool.dll")]
+            [DllImport("..\\MyCustomDll\\libacrcloud_extr_tool.dll")]
             private static extern int create_humming_fingerprint_by_filebuffer(byte[] file_buffer, int file_buffer_len, int start_time_seconds, int audio_len_seconds, ref IntPtr fps_buffer);
-            [DllImport("libacrcloud_extr_tool.dll")]
+            [DllImport("..\\MyCustomDll\\libacrcloud_extr_tool.dll")]
             private static extern int decode_audio_by_file(string file_path, int start_time_seconds, int audio_len_seconds, ref IntPtr audio_buffer);
-            [DllImport("libacrcloud_extr_tool.dll")]
+            [DllImport("..\\MyCustomDll\\libacrcloud_extr_tool.dll")]
             private static extern int decode_audio_by_filebuffer(byte[] file_buffer, int file_buffer_len, int start_time_seconds, int audio_len_seconds, ref IntPtr audio_buffer);
-            [DllImport("libacrcloud_extr_tool.dll")]
+            [DllImport("..\\MyCustomDll\\libacrcloud_extr_tool.dll")]
             private static extern void acr_free(IntPtr buffer);
-            [DllImport("libacrcloud_extr_tool.dll")]
+            [DllImport("..\\MyCustomDll\\libacrcloud_extr_tool.dll")]
             private static extern int get_duration_ms_by_file(string file_path);
-            [DllImport("libacrcloud_extr_tool.dll")]
+            [DllImport("..\\MyCustomDll\\libacrcloud_extr_tool.dll")]
             private static extern void acr_set_debug(byte is_debug);
-            [DllImport("libacrcloud_extr_tool.dll")]
+            [DllImport("..\\MyCustomDll\\libacrcloud_extr_tool.dll")]
             private static extern void acr_init();
         }
 
